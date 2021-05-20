@@ -29,11 +29,14 @@ namespace Assets.Scripts.Typewriters
         [Header("Parts")]
         public TMP_Text textBox;
         
+        [Header("References")]
+        public MonoBehaviour[] typingNotifiables;
 
         // -- Class
 
         private readonly TextTokenizer _tokenizer = new TextTokenizer();
         private readonly TextParser _parser = new TextParser();
+        private readonly ICollection<ITypingNotifiable> _typingNotifiables = new List<ITypingNotifiable>();
 
         private bool _skipToEnd = false;
         private Coroutine _animationCoroutine;
@@ -42,7 +45,15 @@ namespace Assets.Scripts.Typewriters
 
         private float _lastCaretMoveTime = 0;
         private float _caretDelay = 0;
-        
+
+        void Start()
+        {
+            foreach (var typingNotifiable in typingNotifiables)
+            {
+                _typingNotifiables.Add((ITypingNotifiable) typingNotifiable);
+            }
+        }
+
         public void Animate(string rawText)
         {
             if (rawText == null)
@@ -112,11 +123,13 @@ namespace Assets.Scripts.Typewriters
             _caretIndex = 0;
             _skipToEnd = false;
             _caretDelay = defaultCaretDelay;
-            
+
+            OnTypingBegin();
+
             int charCount = textInfo.characterCount;
             if (charCount == 0)
             {
-                OnEndReached();
+                OnTypingEnd();
                 yield break;
             }
 
@@ -128,7 +141,7 @@ namespace Assets.Scripts.Typewriters
                     if (_skipToEnd)
                     {
                         _caretIndex = charCount;
-                        OnEndReached();
+                        OnTypingEnd();
                     }
                     else if (ShouldMoveCaret())
                     {
@@ -138,7 +151,7 @@ namespace Assets.Scripts.Typewriters
                         _lastCaretMoveTime = Time.unscaledTime;
                         if (_caretIndex == charCount)
                         {
-                            OnEndReached();
+                            OnTypingEnd();
                         }
                         else
                         {
@@ -196,12 +209,19 @@ namespace Assets.Scripts.Typewriters
             return Time.unscaledTime > _lastCaretMoveTime + _caretDelay;
         }
 
+        // -- Notifications
+
+        private void OnTypingBegin()
+        {
+            throw new NotImplementedException();
+        }
+
         private void OnCaretMove()
         {
             // do nothing for now
         }
 
-        private void OnEndReached()
+        private void OnTypingEnd()
         {
             // do nothing for now
         }
