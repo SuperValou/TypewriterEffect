@@ -1,19 +1,20 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 namespace Assets.Scripts.Typewriters
 {
     public class TypewriterAnimator : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        // -- Editor
 
-        // Update is called once per frame
-        void Update()
+        [Header("Parts")]
+        public TMP_Text textBox;
+
+        // -- Class
+
+        public void Animate(string textToAnimate)
         {
-        
+            textBox.text = textToAnimate;
         }
     }
 }

@@ -1,19 +1,21 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Typewriters;
+using UnityEngine;
 
 namespace Assets.Scripts.SceneScripts
 {
     public class DemoScript : MonoBehaviour
     {
-        // Start is called before the first frame update
+        // -- Editor
+
+        public string textToAnimate = "Hello world";
+
+        public TypewriterAnimator typewriterAnimator;
+
+        // -- Class
+
         void Start()
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            typewriterAnimator.Animate(textToAnimate);
         }
     }
 }
