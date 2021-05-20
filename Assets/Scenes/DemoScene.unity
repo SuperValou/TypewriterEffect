@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textToAnimate: Hello world
-  typewriterAnimator: {fileID: 0}
+  typewriterAnimator: {fileID: 1588046227}
 --- !u!4 &991558519
 Transform:
   m_ObjectHideFlags: 0
@@ -586,7 +586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921b0afcc11a985478365cfbe9e24dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textBox: {fileID: 0}
+  textBox: {fileID: 1569073911}
 --- !u!1 &2035022434
 GameObject:
   m_ObjectHideFlags: 0
