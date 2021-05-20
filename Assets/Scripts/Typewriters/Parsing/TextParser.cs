@@ -125,7 +125,7 @@ namespace Assets.Scripts.Typewriters.Parsing
         {
             if (_parsedAnimableText == null)
             {
-                throw new InvalidOperationException($"No template were parsed beforehand. Did you forget to call the {nameof(Parse)} method?");
+                throw new InvalidOperationException($"Nothing was parsed beforehand. Did you forget to call the {nameof(Parse)} method?");
             }
 
             return _parsedAnimableText;
