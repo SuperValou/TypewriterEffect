@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Assets.Scripts.Typewriters.Parsing;
+using Assets.Scripts.TypewriterEffects.Parsing;
 
-namespace Assets.Scripts.Typewriters.Anims
+namespace Assets.Scripts.TypewriterEffects.Anims
 {
     public class AnimableText
     {

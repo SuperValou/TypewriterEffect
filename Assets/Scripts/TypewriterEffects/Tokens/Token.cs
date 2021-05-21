@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Scripts.Typewriters.Tokens
+namespace Assets.Scripts.TypewriterEffects.Tokens
 {
     public class Token
     {

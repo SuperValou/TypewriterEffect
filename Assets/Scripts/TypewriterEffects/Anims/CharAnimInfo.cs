@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Typewriters.Anims
+namespace Assets.Scripts.TypewriterEffects.Anims
 {
     public class CharAnimInfo
     {

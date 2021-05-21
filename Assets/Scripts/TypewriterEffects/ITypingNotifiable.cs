@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Typewriters
+﻿namespace Assets.Scripts.TypewriterEffects
 {
     public interface ITypingNotifiable
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Typewriters.Anims;
-using Assets.Scripts.Typewriters.Parsing;
-using Assets.Scripts.Typewriters.Tokens;
+using Assets.Scripts.TypewriterEffects.Anims;
+using Assets.Scripts.TypewriterEffects.Parsing;
+using Assets.Scripts.TypewriterEffects.Tokens;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.Typewriters
+namespace Assets.Scripts.TypewriterEffects
 {
     public class TypewriterAnimator : MonoBehaviour
     {

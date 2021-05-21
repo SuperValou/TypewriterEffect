@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Typewriters.Anims;
+﻿using Assets.Scripts.TypewriterEffects.Anims;
 
-namespace Assets.Scripts.Typewriters.Parsing
+namespace Assets.Scripts.TypewriterEffects.Parsing
 {
     internal class BeginCharEffectNode : INode
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Typewriters.Anims;
-using Assets.Scripts.Typewriters.Tokens;
+using Assets.Scripts.TypewriterEffects.Anims;
+using Assets.Scripts.TypewriterEffects.Tokens;
 
-namespace Assets.Scripts.Typewriters.Parsing
+namespace Assets.Scripts.TypewriterEffects.Parsing
 {
     public class TextParser
     {

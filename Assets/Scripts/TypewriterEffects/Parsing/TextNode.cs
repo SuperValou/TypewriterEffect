@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Scripts.Typewriters.Parsing
+namespace Assets.Scripts.TypewriterEffects.Parsing
 {
     internal class TextNode : INode
     {

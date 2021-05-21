@@ -1,50 +1,53 @@
-﻿using Assets.Scripts.Typewriters;
+﻿using Assets.Scripts.TypewriterEffects;
 using UnityEngine;
 
-public class TypingSoundPlayer : MonoBehaviour, ITypingNotifiable
+namespace Assets.Scripts.SceneScripts
 {
-    // -- Editor
-
-    [Header("Values")]
-    [Tooltip("Minimal delay before playing a typing sound (seconds).")]
-    public float minTypingDelay = 0.02f;
-
-    [Tooltip("Maximum value of a randomized additional delay (seconds).")]
-    public float maxTypingRandomizedDelay = 0.05f;
-
-    [Header("Parts")]
-    public AudioClip soundToPlay;
-    public AudioSource audioSource;
-
-    // -- Class
-
-    private float _lastTypingTime = 0;
-    private float _typingSoundDelay = 0;
-
-    void Start()
+    public class TypingSoundPlayer : MonoBehaviour, ITypingNotifiable
     {
-        _typingSoundDelay = minTypingDelay;
-    }
+        // -- Editor
 
-    public void OnTypingBegin()
-    {
-        // do nothing
-    }
+        [Header("Values")]
+        [Tooltip("Minimal delay before playing a typing sound (seconds).")]
+        public float minTypingDelay = 0.02f;
 
-    public void OnCaretMove()
-    {
-        if (Time.unscaledTime < _lastTypingTime + _typingSoundDelay)
+        [Tooltip("Maximum value of a randomized additional delay (seconds).")]
+        public float maxTypingRandomizedDelay = 0.05f;
+
+        [Header("Parts")]
+        public AudioClip soundToPlay;
+        public AudioSource audioSource;
+
+        // -- Class
+
+        private float _lastTypingTime = 0;
+        private float _typingSoundDelay = 0;
+
+        void Start()
         {
-            return;
+            _typingSoundDelay = minTypingDelay;
         }
 
-        audioSource.PlayOneShot(soundToPlay);
-        _lastTypingTime = Time.unscaledTime;
-        _typingSoundDelay = minTypingDelay + Random.Range(0, maxTypingRandomizedDelay);
-    }
+        public void OnTypingBegin()
+        {
+            // do nothing
+        }
 
-    public void OnTypingEnd()
-    {
-        // do nothing
+        public void OnCaretMove()
+        {
+            if (Time.unscaledTime < _lastTypingTime + _typingSoundDelay)
+            {
+                return;
+            }
+
+            audioSource.PlayOneShot(soundToPlay);
+            _lastTypingTime = Time.unscaledTime;
+            _typingSoundDelay = minTypingDelay + Random.Range(0, maxTypingRandomizedDelay);
+        }
+
+        public void OnTypingEnd()
+        {
+            // do nothing
+        }
     }
 }

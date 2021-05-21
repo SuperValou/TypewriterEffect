@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Typewriters.Anims
+﻿namespace Assets.Scripts.TypewriterEffects.Anims
 {
     public enum CharEffect
     {

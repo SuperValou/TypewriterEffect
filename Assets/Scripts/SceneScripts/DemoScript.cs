@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Typewriters;
+﻿using Assets.Scripts.TypewriterEffects;
 using UnityEngine;
 
 namespace Assets.Scripts.SceneScripts

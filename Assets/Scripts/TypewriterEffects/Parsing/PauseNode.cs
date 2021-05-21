@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Typewriters.Parsing
+﻿namespace Assets.Scripts.TypewriterEffects.Parsing
 {
     internal class PauseNode : INode
     {

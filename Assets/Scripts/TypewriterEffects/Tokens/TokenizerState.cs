@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Typewriters.Tokens
+﻿namespace Assets.Scripts.TypewriterEffects.Tokens
 {
     internal enum TokenizerState
     {

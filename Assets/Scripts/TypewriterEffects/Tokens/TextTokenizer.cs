@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Assets.Scripts.Typewriters.Tokens
+namespace Assets.Scripts.TypewriterEffects.Tokens
 {
     public class TextTokenizer
     {
