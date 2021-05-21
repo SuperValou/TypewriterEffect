@@ -393,17 +393,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287b1f3ce3ef2344386e77d0267e6c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToAnimate: 'Hello world.<pause:short>
-
-    Lorem ipsum dolor sit amet, consectetur
-    adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<pause:long>
-
-    <speed:slow>Typing
-    slowly... <pause:short>And back to normal.<pause:long>
-
-    <anim:wave>Waving
-    text</anim>, <anim:shake>shaking text</anim>, <anim:blink>blinking text</anim>,
-    and  <color=red><anim:wave><anim:shake><anim:blink>nested effects</anim></anim></anim></color>'
+  textToAnimate: "TypewriterEffect allows you to display text progressively in Unity
+    instead of displaying all characters all at once. <pause:short>It can be useful
+    to display character dialogue, lore, or on-screen information.<pause:short>\nIt
+    supports short interruptions,<pause:short> or even longer ones,<pause:long> \nand
+    <speed:slow>speed can be adjusted.<pause:short>\nAs it's based on TextMeshPro,
+    rich-text tags can be used to make <i>italic</i> or <color=red>colored</color>
+    text.<pause:long>\nTypewriterEffect also includes its own effects like <anim:wave>waving</anim>,
+    <pause:short><anim:shake>shaking</anim>, <pause:short>or <anim:blink>blinking</anim>
+    text.\n<pause:long>All these can also be <color=yellow><anim:wave><anim:blink>combined
+    together</anim></anim></color>."
   typewriterAnimator: {fileID: 1588046227}
 --- !u!4 &991558519
 Transform:
@@ -454,7 +453,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 721.5, y: 355.3}
+  m_SizeDelta: {x: 1111, y: 555}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569073911
 MonoBehaviour:
