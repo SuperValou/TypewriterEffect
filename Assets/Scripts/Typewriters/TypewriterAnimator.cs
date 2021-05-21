@@ -213,17 +213,47 @@ namespace Assets.Scripts.Typewriters
 
         private void OnTypingBegin()
         {
-            throw new NotImplementedException();
+            foreach (var notifiable in _typingNotifiables)
+            {
+                try
+                {
+                    notifiable.OnTypingBegin();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
         }
 
         private void OnCaretMove()
         {
-            // do nothing for now
+            foreach (var notifiable in _typingNotifiables)
+            {
+                try
+                {
+                    notifiable.OnCaretMove();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
         }
 
         private void OnTypingEnd()
         {
-            // do nothing for now
+            foreach (var notifiable in _typingNotifiables)
+            {
+                try
+                {
+                    notifiable.OnTypingEnd();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
         }
     }
 }

@@ -111,7 +111,7 @@ namespace Assets.Scripts.Typewriters.Anims
                 switch (charEffect)
                 {
                     case CharEffect.Shake:
-                        throw new NotImplementedException();
+                        break;
                         
                     case CharEffect.Wave:
                         float phaseShift = CharIndex * WavePhaseShift;

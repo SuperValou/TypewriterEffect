@@ -7,6 +7,7 @@ namespace Assets.Scripts.SceneScripts
     {
         // -- Editor
 
+        [TextArea(minLines:5, maxLines:20)]
         public string textToAnimate = "Hello world";
 
         public TypewriterAnimator typewriterAnimator;

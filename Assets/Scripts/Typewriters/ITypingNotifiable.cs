@@ -2,6 +2,8 @@
 {
     public interface ITypingNotifiable
     {
-        
+        void OnTypingBegin();
+        void OnCaretMove();
+        void OnTypingEnd();
     }
 }
