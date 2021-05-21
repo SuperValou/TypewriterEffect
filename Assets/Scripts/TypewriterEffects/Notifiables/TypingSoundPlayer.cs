@@ -1,7 +1,6 @@
-﻿using Assets.Scripts.TypewriterEffects;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.SceneScripts
+namespace Assets.Scripts.TypewriterEffects.Notifiables
 {
     public class TypingSoundPlayer : MonoBehaviour, ITypingNotifiable
     {

@@ -1,6 +1,8 @@
 # TypewriterEffect
 Typewriter effect for text in Unity.
 
+## How to install and use in your Unity project
+(coming soon)
 
 ## How to get the project up and running
 This repo uses TextMeshPro. To avoid clogging the version control, TextMeshPro files were excluded from the repository. 

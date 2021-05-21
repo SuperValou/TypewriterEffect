@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.TypewriterEffects.Anims;
+using Assets.Scripts.TypewriterEffects.Notifiables;
 using Assets.Scripts.TypewriterEffects.Parsing;
 using Assets.Scripts.TypewriterEffects.Tokens;
 using TMPro;
