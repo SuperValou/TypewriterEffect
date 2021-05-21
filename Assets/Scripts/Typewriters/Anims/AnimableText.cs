@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -150,7 +150,7 @@ namespace Assets.Scripts.Typewriters.Anims
             List<CharEffect> result = new List<CharEffect>();
             foreach (var effect in _charEffects)
             {
-                if (effect.Item1 <= charIndex && charIndex <= effect.Item3)
+                if (effect.Item1 <= charIndex && charIndex < effect.Item3)
                 {
                     // char is in range of the effect
                     result.Add(effect.Item2);
