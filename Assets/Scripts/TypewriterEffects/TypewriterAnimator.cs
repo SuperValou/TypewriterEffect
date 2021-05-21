@@ -18,7 +18,7 @@ namespace Assets.Scripts.TypewriterEffects
         public float charRevealTime = 0.05f;
 
         [Tooltip("Delay spent by the caret before moving to the next character, at normal speed (seconds).")]
-        public float defaultCaretDelay = 0.01f;
+        public float defaultCaretDelay = 0.02f;
 
         [Tooltip("Delay after the whole text is displayed before characters start fading out (seconds).")]
         public float timeBeforeFadingOut = 3f;

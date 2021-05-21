@@ -9,7 +9,7 @@ namespace Assets.Scripts.SceneScripts
 
         [Header("Values")]
         [Tooltip("Minimal delay before playing a typing sound (seconds).")]
-        public float minTypingDelay = 0.02f;
+        public float minTypingDelay = 0.03f;
 
         [Tooltip("Maximum value of a randomized additional delay (seconds).")]
         public float maxTypingRandomizedDelay = 0.05f;

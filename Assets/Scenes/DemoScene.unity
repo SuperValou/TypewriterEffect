@@ -399,7 +399,7 @@ MonoBehaviour:
     adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<pause:long>
 
     <speed:slow>Typing
-    slowly... <pause:short><speed:normal>And back to normal.<pause:long>
+    slowly... <pause:short>And back to normal.<pause:long>
 
     <anim:wave>Waving
     text</anim>, <anim:shake>shaking text</anim>, <anim:blink>blinking text</anim>,
@@ -597,7 +597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charRevealTime: 0.05
-  defaultCaretDelay: 0.01
+  defaultCaretDelay: 0.02
   timeBeforeFadingOut: 3
   fadeOutDuration: 1
   textBox: {fileID: 1569073911}
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1870fbc8f1823a64b9711c44d516378f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTypingDelay: 0.02
+  minTypingDelay: 0.03
   maxTypingRandomizedDelay: 0.05
   soundToPlay: {fileID: 8300000, guid: 7899acb96ed396d4d9346a9f7910299a, type: 3}
   audioSource: {fileID: 2099192124}

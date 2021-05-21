@@ -6,10 +6,13 @@ namespace Assets.Scripts.TypewriterEffects.Anims
 {
     public class CharAnimInfo
     {
+        private const float ShakeAmplitude = 6f;
+        private const float ShakeFrequency = 25f;
+
         private const float WaveAmplitude = 0.06f;
         private const float WaveFrequency = 2f*Mathf.PI / 1f; // 2 * PI / time-to-loop 
         private const float WavePhaseShift = -1.1f; // offset between characters
-
+        
         private const float BlinkFrequency = 2f*Mathf.PI / 1.25f; // 2 * PI / time-to-loop 
 
         private static readonly Color32 EmptyColor = new Color32();
@@ -111,6 +114,8 @@ namespace Assets.Scripts.TypewriterEffects.Anims
                 switch (charEffect)
                 {
                     case CharEffect.Shake:
+                        x += ShakeAmplitude * (Mathf.PerlinNoise(ShakeFrequency * time, 0) - 0.5f);
+                        y += ShakeAmplitude * (Mathf.PerlinNoise(0, ShakeFrequency * time) - 0.5f);
                         break;
                         
                     case CharEffect.Wave:
