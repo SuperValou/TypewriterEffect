@@ -15,166 +15,158 @@ namespace Assets.Scripts.TypewriterEffects.Tokens
         private static readonly Regex AnimEndRegex = new Regex(@"\G<\/anim>", RegexOptions.None); // Matches "</anim>"
         private static readonly Regex RichTextRegex = new Regex(@"\G(?:<b>|<\/b>|<i>|<\/i>|<size=.+?>|<\/size>|<color=.+?>|<\/color>|<material=.+?>|<\/material>|<quad material=.+?>)", RegexOptions.None); // Matches stuff like "<size=50%>", see: https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/StyledText.html
         private static readonly Regex SpriteRegex = new Regex(@"\G<sprite=.+?>", RegexOptions.None); // Matches <sprite="assetName" name="spriteName">
-
-        private int _currentIndex;
-        private TokenizerState _state;
-
-        private List<Token> _tokens;
         
-        public void Tokenize(string text)
+        public ICollection<Token> Tokenize(string text)
         {
             if (text == null)
             {
                 throw new ArgumentNullException(nameof(text));
             }
 
-            _tokens = new List<Token>();
-            _currentIndex = 0;
-
-            while (_currentIndex < text.Length)
+            List<Token> tokens = new List<Token>();
+            if (text == string.Empty)
             {
-                switch (_state)
+                return tokens;
+            }
+            
+            int currentIndex = 0;
+            TokenizerState state = TokenizerState.ReadingText;
+
+            while (currentIndex < text.Length)
+            {
+                switch (state)
                 {
                     case TokenizerState.ReadingText:
-                        var textMatch = RawTextRegex.Match(text, _currentIndex);
+                        var textMatch = RawTextRegex.Match(text, currentIndex);
                         if (textMatch.Success)
                         {
                             string rawText = textMatch.Groups["text"].ToString();
                             if (rawText != string.Empty)
                             {
                                 var rawTextToken = new Token(TokenType.RawText, rawText);
-                                _tokens.Add(rawTextToken);
+                                tokens.Add(rawTextToken);
                             }
 
-                            _currentIndex += rawText.Length;
-                            _state = TokenizerState.ReadingTag;
+                            currentIndex += rawText.Length;
+                            state = TokenizerState.ReadingTag;
                         }
                         else
                         {
-                            var rawTextToken = new Token(TokenType.RawText, text.Substring(_currentIndex));
-                            _tokens.Add(rawTextToken);
-                            _currentIndex = text.Length;
-                            return;
+                            var rawTextToken = new Token(TokenType.RawText, text.Substring(currentIndex));
+                            tokens.Add(rawTextToken);
+                            return tokens;
                         }
                         break;
 
                     case TokenizerState.ReadingTag:
                         // Check for pause tag
-                        var match = PauseRegex.Match(text, _currentIndex);
+                        var match = PauseRegex.Match(text, currentIndex);
                         if (match.Success)
                         {
                             string pauseLength = match.Groups["pauseLength"].ToString();
 
-                            _tokens.Add(new Token(TokenType.OpeningTag, "<"));
-                            _currentIndex += "<".Length;
+                            tokens.Add(new Token(TokenType.OpeningTag, "<"));
+                            currentIndex += "<".Length;
 
-                            _tokens.Add(new Token(TokenType.PauseTag, "pause:"));
-                            _currentIndex += "pause:".Length;
+                            tokens.Add(new Token(TokenType.PauseTag, "pause:"));
+                            currentIndex += "pause:".Length;
 
-                            _tokens.Add(new Token(TokenType.Value, pauseLength));
-                            _currentIndex += pauseLength.Length;
+                            tokens.Add(new Token(TokenType.Value, pauseLength));
+                            currentIndex += pauseLength.Length;
 
-                            _tokens.Add(new Token(TokenType.ClosingTag, ">"));
-                            _currentIndex += ">".Length;
+                            tokens.Add(new Token(TokenType.ClosingTag, ">"));
+                            currentIndex += ">".Length;
                             
-                            _state = TokenizerState.ReadingText;
+                            state = TokenizerState.ReadingText;
                             continue;
                         }
 
                         // Check for speed tag
-                        match = SpeedRegex.Match(text, _currentIndex);
+                        match = SpeedRegex.Match(text, currentIndex);
                         if (match.Success)
                         {
                             string speedValue = match.Groups["speedValue"].ToString();
 
-                            _tokens.Add(new Token(TokenType.OpeningTag, "<"));
-                            _currentIndex += "<".Length;
+                            tokens.Add(new Token(TokenType.OpeningTag, "<"));
+                            currentIndex += "<".Length;
 
-                            _tokens.Add(new Token(TokenType.SpeedChangeTag, "speed:"));
-                            _currentIndex += "speed:".Length;
+                            tokens.Add(new Token(TokenType.SpeedChangeTag, "speed:"));
+                            currentIndex += "speed:".Length;
 
-                            _tokens.Add(new Token(TokenType.Value, speedValue));
-                            _currentIndex += speedValue.Length;
+                            tokens.Add(new Token(TokenType.Value, speedValue));
+                            currentIndex += speedValue.Length;
 
-                            _tokens.Add(new Token(TokenType.ClosingTag, ">"));
-                            _currentIndex += ">".Length;
+                            tokens.Add(new Token(TokenType.ClosingTag, ">"));
+                            currentIndex += ">".Length;
 
-                            _state = TokenizerState.ReadingText;
+                            state = TokenizerState.ReadingText;
                             continue;
                         }
 
                         // Check for anim start tag
-                        match = AnimStartRegex.Match(text, _currentIndex);
+                        match = AnimStartRegex.Match(text, currentIndex);
                         if (match.Success)
                         {
                             string animType = match.Groups["animType"].ToString();
 
-                            _tokens.Add(new Token(TokenType.OpeningTag, "<"));
-                            _currentIndex += "<".Length;
+                            tokens.Add(new Token(TokenType.OpeningTag, "<"));
+                            currentIndex += "<".Length;
 
-                            _tokens.Add(new Token(TokenType.AnimStartTag, "anim:"));
-                            _currentIndex += "anim:".Length;
+                            tokens.Add(new Token(TokenType.AnimStartTag, "anim:"));
+                            currentIndex += "anim:".Length;
 
-                            _tokens.Add(new Token(TokenType.Value, animType));
-                            _currentIndex += animType.Length;
+                            tokens.Add(new Token(TokenType.Value, animType));
+                            currentIndex += animType.Length;
 
-                            _tokens.Add(new Token(TokenType.ClosingTag, ">"));
-                            _currentIndex += ">".Length;
+                            tokens.Add(new Token(TokenType.ClosingTag, ">"));
+                            currentIndex += ">".Length;
 
-                            _state = TokenizerState.ReadingText;
+                            state = TokenizerState.ReadingText;
                             continue;
                         }
 
                         // Check for anim end tag
-                        match = AnimEndRegex.Match(text, _currentIndex);
+                        match = AnimEndRegex.Match(text, currentIndex);
                         if (match.Success)
                         {
-                            _tokens.Add(new Token(TokenType.AnimEndTag, match.Value));
-                            _currentIndex += match.Value.Length;
+                            tokens.Add(new Token(TokenType.AnimEndTag, match.Value));
+                            currentIndex += match.Value.Length;
 
-                            _state = TokenizerState.ReadingText;
+                            state = TokenizerState.ReadingText;
                             continue;
                         }
 
                         // Check for sprite tag
-                        match = SpriteRegex.Match(text, _currentIndex);
+                        match = SpriteRegex.Match(text, currentIndex);
                         if (match.Success)
                         {
-                            _tokens.Add(new Token(TokenType.SpriteInstruction, match.Value));
-                            _currentIndex += match.Value.Length;
+                            tokens.Add(new Token(TokenType.SpriteInstruction, match.Value));
+                            currentIndex += match.Value.Length;
 
-                            _state = TokenizerState.ReadingText;
+                            state = TokenizerState.ReadingText;
                             continue;
                         }
 
                         // Check for rich text tag
-                        match = RichTextRegex.Match(text, _currentIndex);
+                        match = RichTextRegex.Match(text, currentIndex);
                         if (match.Success)
                         {
-                            _tokens.Add(new Token(TokenType.RichTextInstruction, match.Value));
-                            _currentIndex += match.Value.Length;
+                            tokens.Add(new Token(TokenType.RichTextInstruction, match.Value));
+                            currentIndex += match.Value.Length;
 
-                            _state = TokenizerState.ReadingText;
+                            state = TokenizerState.ReadingText;
                             continue;
                         }
 
                         // Ignore other tags
-                        _tokens.Add(new Token(TokenType.RawText, "<"));
-                        _currentIndex += "<".Length;
-                        _state = TokenizerState.ReadingText;
+                        tokens.Add(new Token(TokenType.RawText, "<"));
+                        currentIndex += "<".Length;
+                        state = TokenizerState.ReadingText;
                         break;
                 }
             }
-        }
 
-        public ICollection<Token> GetTokens()
-        {
-            if (_tokens == null)
-            {
-                throw new InvalidOperationException($"No text was tokenized. Did you forget to call the {nameof(Tokenize)} method?");
-            }
-
-            return _tokens.ToList();
+            return tokens;
         }
     }
 }

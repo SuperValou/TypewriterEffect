@@ -563,7 +563,7 @@ GameObject:
   - component: {fileID: 1588046226}
   - component: {fileID: 1588046227}
   m_Layer: 0
-  m_Name: TypewriterAnimator
+  m_Name: Typewriter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -597,9 +597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charRevealTime: 0.05
   defaultCaretDelay: 0.02
-  timeBeforeFadingOut: 3
-  fadeOutDuration: 1
-  textBox: {fileID: 1569073911}
+  _targetTextMesh: {fileID: 1569073911}
   typingNotifiables:
   - {fileID: 1972080797}
 --- !u!1 &1972080796

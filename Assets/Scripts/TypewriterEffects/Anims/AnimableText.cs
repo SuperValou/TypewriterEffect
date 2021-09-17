@@ -25,7 +25,7 @@ namespace Assets.Scripts.TypewriterEffects.Anims
             }
             else if (node is RichTextInstructionNode)
             {
-                // ignore rich text tags
+                // rich-text tags do not change caret position
                 return;
             }
             else if (node is SpriteNode)
@@ -45,8 +45,8 @@ namespace Assets.Scripts.TypewriterEffects.Anims
                 {
                     throw new InvalidOperationException($"Unable to mark the end of a character effect at position {_maxCaretPosition}, because no effect began before this point. " +
                                                         $"Did you forget or mispelled an opening tag ({string.Join("/", Enum.GetNames(typeof(CharEffect)))})?");
-                    
                 }
+
                 // find the last effect range without a defined end
                 var invertedStack = new Stack<Tuple<int, CharEffect, int>>();
                 var effectRange = _charEffects.Pop();
@@ -103,6 +103,9 @@ namespace Assets.Scripts.TypewriterEffects.Anims
             }
         }
 
+        /// <summary>
+        /// Get the resulting text with rich-text tags still present.
+        /// </summary>
         public string GetRichText()
         {
             var builder = new StringBuilder();
@@ -129,6 +132,10 @@ namespace Assets.Scripts.TypewriterEffects.Anims
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Get the resulting pure text, without any tag.
+        /// </summary>
+        /// <returns></returns>
         public string GetDisplayedText()
         {
             var builder = new StringBuilder();

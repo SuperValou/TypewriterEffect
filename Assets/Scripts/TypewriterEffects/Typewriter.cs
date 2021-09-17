@@ -10,9 +10,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.TypewriterEffects
 {
-    public class TypewriterAnimator : MonoBehaviour
+    public class Typewriter : MonoBehaviour
     {
-        // -- Editor
+        // -- Inspector
 
         [Header("Values")]
         [Tooltip("Time to reveal a character (seconds).")]
@@ -20,16 +20,11 @@ namespace Assets.Scripts.TypewriterEffects
 
         [Tooltip("Delay spent by the caret before moving to the next character, at normal speed (seconds).")]
         public float defaultCaretDelay = 0.02f;
-
-        [Tooltip("Delay after the whole text is displayed before characters start fading out (seconds).")]
-        public float timeBeforeFadingOut = 3f;
-
-        [Tooltip("Time for a character to disappear (seconds). Set to a negative number to keep the text forever.")]
-        public float fadeOutDuration = 1f;
         
-        [Header("Parts")]
-        public TMP_Text textBox;
-        
+        [Header("Target")]
+        [SerializeField]
+        private TMP_Text _targetTextMesh;
+
         [Header("References")]
         public MonoBehaviour[] typingNotifiables;
 
@@ -46,40 +41,58 @@ namespace Assets.Scripts.TypewriterEffects
 
         private float _lastCaretMoveTime = 0;
         private float _caretDelay = 0;
-
+        
         void Start()
         {
+            if (_targetTextMesh == null)
+            {
+                throw new InvalidOperationException($"{nameof(_targetTextMesh)} of {nameof(Typewriter)} ({this.gameObject}) is null. " +
+                                                    $"Did you forget to set a target?");
+            }
+
             foreach (var typingNotifiable in typingNotifiables)
             {
                 _typingNotifiables.Add((ITypingNotifiable) typingNotifiable);
             }
         }
 
-        public void Animate(string rawText)
+        /// <summary>
+        /// Change the current TextMesh target.
+        /// </summary>
+        public void SetTargetTextMesh(TMP_Text textMesh)
         {
-            if (rawText == null)
+            Stop();
+            _targetTextMesh = textMesh ?? throw new ArgumentNullException(nameof(textMesh));
+        }
+
+        /// <summary>
+        /// Animate the text from the targeted TextMeshPro component.
+        /// </summary>
+        public void Animate()
+        {
+            Animate(_targetTextMesh.text);
+        }
+
+        /// <summary>
+        /// Animate the given text into the targeted TextMeshPro component.
+        /// </summary>
+        public void Animate(string inputText)
+        {
+            if (inputText == null)
             {
-                throw new ArgumentNullException(nameof(rawText));
+                throw new ArgumentNullException(nameof(inputText));
             }
 
-            if (_animationCoroutine != null)
-            {
-                this.StopCoroutine(_animationCoroutine);
-                _animationCoroutine = null;
-            }
-
-            // Extract animation instructions
-            _tokenizer.Tokenize(rawText);
-            var tokens = _tokenizer.GetTokens();
-            _parser.Parse(tokens);
-            var animableText = _parser.GetParsedText();
-
+            Stop();
+            
+            AnimableText animableText = GetAnimableText(inputText);
+            
             // Apply message and compute characters
-            textBox.textInfo.ClearAllMeshInfo();
-            textBox.text = animableText.GetRichText();
-            textBox.ForceMeshUpdate();
+            _targetTextMesh.textInfo.ClearAllMeshInfo();
+            _targetTextMesh.text = animableText.GetRichText();
+            _targetTextMesh.ForceMeshUpdate();
 
-            TMP_TextInfo textInfo = textBox.textInfo;
+            TMP_TextInfo textInfo = _targetTextMesh.textInfo;
 
             // Initialize anims for each char
             List<CharAnimInfo> charAnims = new List<CharAnimInfo>();
@@ -118,6 +131,42 @@ namespace Assets.Scripts.TypewriterEffects
             // Run animation
             _animationCoroutine = StartCoroutine(RunAnimationRoutine(textInfo, charAnims, caretEffects));
         }
+
+        /// <summary>
+        /// Move the caret directly to the end of the animated text.
+        /// </summary>
+        public void SkipToEnd()
+        {
+            _skipToEnd = true;
+        }
+
+        /// <summary>
+        /// Stop the animation.
+        /// </summary>
+        public void Stop()
+        {
+            if (_animationCoroutine == null)
+            {
+                return;
+            }
+
+            this.StopCoroutine(_animationCoroutine);
+            _animationCoroutine = null;
+        }
+        
+        private AnimableText GetAnimableText(string inputText)
+        {
+            if (inputText == string.Empty)
+            {
+                return new AnimableText();
+            }
+
+            var tokens = _tokenizer.Tokenize(inputText);
+            _parser.Parse(tokens);
+            var animableText = _parser.GetParsedText();
+            return animableText;
+        }
+
 
         private IEnumerator RunAnimationRoutine(TMP_TextInfo textInfo, ICollection<CharAnimInfo> charAnims, IDictionary<int, CaretEffect> caretEffects)
         {
@@ -182,15 +231,11 @@ namespace Assets.Scripts.TypewriterEffects
                     }
                 }
 
-                textBox.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32 | TMP_VertexDataUpdateFlags.Vertices);
+                _targetTextMesh.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32 | TMP_VertexDataUpdateFlags.Vertices);
                 yield return null;
             }
         }
 
-        public void SkipToEnd()
-        {
-            _skipToEnd = true;
-        }
 
         private void ApplyCaretEffectsForCurrentIndex(IDictionary<int, CaretEffect> caretEffects)
         {
