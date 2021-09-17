@@ -1,6 +1,10 @@
 # TypewriterEffect
 Typewriter effect for text in Unity.
 
+## Overwiew
+
+https://user-images.githubusercontent.com/6672340/119202892-0d88e900-ba92-11eb-9f74-68c3af214ca7.mp4
+
 ## How to install and use in your Unity project
 (coming soon)
 
